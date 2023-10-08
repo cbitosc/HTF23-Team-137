@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Data</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <style>
+
+        /* body{
+            background-image: url("bg.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+        } */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Disease Data</h1>
+    <input type="text" id="searchInput" placeholder="Search for a disease..." onkeyup="filterTable()">
+    <table id="diseaseTable">
+        <thead>
+            <tr>
+                <th>Treatment/Surgery</th>
+                <th>Disease Name</th>
+                <th>Medication</th>
+                <th>Surgery</th>
+                <th>Scanning</th>
+                <th>Test (Sample Collection)</th>
+                <th>Organ Affected</th>
+                <th>Total Cost</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Knee Replacement</td>
+                <td>Arthritis</td>
+                <td>₹ 22,917</td>
+                <td>₹ 275,000</td>
+                <td>₹ 11,000</td>
+                <td>₹ 16,000</td>
+                <td>Knees</td>
+                <td>₹ 324,917</td>
+                <td><button><span class="download-button" onclick="downloadCostSheet('Knee Replacement','₹ 22,917','₹ 275,000','₹ 11,000','₹ 16,000','₹ 324,917')">Download</span></button></td>
+            </tr>
+            <tr>
+                <td>Appendectomy</td>
+                <td>Appendicitis</td>
+                <td>₹ 8,500</td>
+                <td>₹ 42,000</td>
+                <td>₹ 6,000</td>
+                <td>₹ 3,500</td>
+                <td>Appendix</td>
+                <td>₹ 60,000</td>
+                <td><button><span class="download-button" onclick="downloadCostSheet('Appendectomy','₹ 28,500','₹ 42,000','₹ 6,000','₹ 3,500','₹ 60,000')">Download</span></button></td>
+            </tr>
+            <tr>
+                <td>Heart Bypass Surgery</td>
+                <td>Coronary Artery Disease</td>
+                <td>₹ 31,500</td>
+                <td>₹ 325,000</td>
+                <td>₹ 12,000</td>
+                <td>₹ 8,500</td>
+                <td>Heart</td>
+                <td>₹ 377,000</td>
+                <td><button><span class="download-button" onclick="downloadCostSheet('Heart Bypass Surgery','₹ 31,500','₹ 325,000','₹ 12,000','₹ 8,500','₹ 377,000')">Download</span></button></td>
+            </tr>
+            <tr>
+                <td>Cataract Surgery</td>
+                <td>Cataracts</td>
+                <td>₹ 6,200</td>
+                <td>N/A</td>
+                <td>₹ 3,500</td>
+                <td>₹ 2,000</td>
+                <td>Eyes</td>
+                <td>₹ 11,700</td>
+                <td><button><span class="download-button" onclick="downloadCostSheet('Cataract Surgery','₹ 6,200','N/A','₹ 3,500','₹ 2,000','₹ 11,700')">Download</span></button></td>
+            </tr>
+            <tr>
+                <td>Hysterectomy</td>
+                <td>Uterine Fibroids</td>
+                <td>₹ 14,000</td>
+                <td>₹ 50,000</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>Uterus</td>
+                <td>₹ 64,000</td>
+                <td><button><span class="download-button" onclick="downloadCostSheet('Hysterectomy','₹ 14,000','₹ 50,000','N/A','N/A','₹ 64,000')">Download</span></button></td>
+            </tr>
+            <!-- Add more disease data rows here -->
+<tr>
+    <td>Cholecystectomy</td>
+    <td>Gallstones</td>
+    <td>₹ 9,800</td>
+    <td>₹ 38,000</td>
+    <td>₹ 4,500</td>
+    <td>₹ 2,000</td>
+    <td>Gallbladder</td>
+    <td>₹ 54,300</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Cholecystectomy','₹ 9,800','₹ 38,000','₹ 4,500','₹ 2,000','₹ 54,300')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Cancer</td>
+    <td>Oncology</td>
+    <td>₹ 6,667	</td>
+    <td>₹ 80,000</td>
+    <td>₹ 7,200</td>
+    <td>₹ 8,400	</td>
+    <td>N/A</td>
+    <td>₹ 1,02,267</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Cancer','₹ 6,667','₹ 80,000','₹ 7,200','₹ 8,400','₹ 1,02,267')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Cesarean Section</td>
+    <td>Childbirth</td>
+    <td>₹ 12,000</td>
+    <td>₹ 65,000</td>
+    <td>₹ 5,000</td>
+    <td>₹ 3,000</td>
+    <td>Uterus</td>
+    <td>₹ 85,000</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Cesarean Section','₹ 12,000','₹ 65,000','₹ 5,000','₹ 3,000','₹ 85,000')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Hernia Repair</td>
+    <td>Hernia</td>
+    <td>₹ 7,000</td>
+    <td>₹ 32,000</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>Abdomen</td>
+    <td>₹ 39,000</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Hernia Repair','₹ 7,000','₹ 32,000','N/A','N/A','₹ 39,000')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Root Canal Treatment</td>
+    <td>Tooth Decay</td>
+    <td>₹ 2,500</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>Teeth</td>
+    <td>₹ 2,500</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Root Canal Treatment','₹ 2,500','N/A','N/A','N/A','₹ 2,500')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Tonsillectomy</td>
+    <td>Tonsillitis</td>
+    <td>₹ 4,000</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>Throat</td>
+    <td>₹ 4,000</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Tonsillectomy','₹ 4,000','N/A','N/A','N/A','₹ 4,000')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Liver Transplant</td>
+    <td>Liver Disease</td>
+    <td>₹ 45,000</td>
+    <td>₹ 500,000</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>Liver</td>
+    <td>₹ 545,000</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Liver Transplant','₹ 45,000','₹ 500,000','₹N/A','N/A','₹ 545,000')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Colonoscopy</td>
+    <td>Colon Issues</td>
+    <td>₹ 5,200</td>
+    <td>N/A</td>
+    <td>₹ 2,800</td>
+    <td>₹ 1,500</td>
+    <td>Colon</td>
+    <td>₹ 9,500</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Colonoscopy','₹ 5,200','N/A','₹ 2,800','₹ 1,500','₹ 9,500')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Orthopedic Consultation</td>
+    <td>Orthopedic Issues</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>₹ 500</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Orthopedic Consultation','N/A','N/A','₹ N/A','N/A','₹ 500')">Download</span></button></td>
+</tr>
+<tr>
+    <td>Eye Checkup</td>
+    <td>Eye Problems</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>₹ 1,000</td>
+    <td>N/A</td>
+    <td>Eyes</td>
+    <td>₹ 1,000</td>
+    <td><button><span class="download-button" onclick="downloadCostSheet('Eye Checkup','N/A','N/A','₹ 1,000','N/A','₹ 1,000')">Download</span></button></td>
+</tr>
+
+<!-- Add more disease data rows here -->
+
+            <!-- Add more disease data rows here -->
+        </tbody>
+    </table>
+    <script>
+        function downloadCostSheet(treatmentName, medication, surgery, scanning, test, totalCost) {
+            const costData = `Treatment: ${treatmentName}\nMedication: ${medication}\nSurgery: ${surgery}\nScanning: ${scanning}\nTest (Sample Collection): ${test}\nTotal Cost: ${totalCost}`;
+    
+            const blob = new Blob([costData], { type: 'text/plain;charset=utf-8' });
+            saveAs(blob, `${treatmentName}_CostSheet.txt`);
+        }
+    </script>
+    
+
+    <script>
+        function filterTable() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById("diseaseTable");
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                let shouldShow = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cell = cells[j];
+                    if (cell) {
+                        const textValue = cell.textContent || cell.innerText;
+                        if (textValue.toUpperCase().indexOf(filter) > -1) {
+                            shouldShow = true;
+                            break;
+                        }
+                    }
+                }
+
+                rows[i].style.display = shouldShow ? "" : "none";
+            }
+        }
+    </script>
+</body>
+</html>
+
+
